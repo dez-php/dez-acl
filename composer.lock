@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "bb80d158a8676685b6cb70bd521b57a3",
+    "content-hash": "1bbf9ce3ed8290758d7907fc7aa002af",
+    "packages": [
+        {
+            "name": "dez-php/dez-configuration",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dez-php/dez-configuration.git",
+                "reference": "9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dez-php/dez-configuration/zipball/9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5",
+                "reference": "9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dez\\Config\\": "src/Config"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Gontarenko",
+                    "email": "vania.gontarenko@gmail.com"
+                }
+            ],
+            "description": "DezPHP - Config",
+            "keywords": [
+                "config",
+                "dez-config",
+                "dez-php config",
+                "php config"
+            ],
+            "time": "2016-04-14 17:18:34"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.5"
+    },
+    "platform-dev": []
+}

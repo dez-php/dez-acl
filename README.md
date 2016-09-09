@@ -1,2 +1,2 @@
 # dez-acl
-Extended Access Controll List
+Extended Access Control List
