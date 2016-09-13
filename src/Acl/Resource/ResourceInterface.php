@@ -33,6 +33,6 @@ interface ResourceInterface {
      * @param $name
      * @return boolean
      */
-    public function allowPermission($name);
+    public function hasPermission($name);
 
 }

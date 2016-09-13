@@ -13,5 +13,10 @@
   "require": {
     "php": ">=5.5",
     "dez-php/dez-configuration": "~1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dez\\Acl\\": "src/Acl"
+    }
   }
 }

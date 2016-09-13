@@ -64,7 +64,7 @@ class Resource implements ResourceInterface {
      * @param $name
      * @return bool
      */
-    public function allowPermission($name)
+    public function hasPermission($name)
     {
         return $this->permissions->has($name);
     }
