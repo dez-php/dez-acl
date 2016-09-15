@@ -9,12 +9,12 @@ use Dez\Acl\Permission\Predicate;
  * Interface ResourceInterface
  * @package Dez\Acl\Resource
  */
-interface ResourceInterface {
+interface ResourceInterface extends ObjectIdentityInterface {
 
     /**
      * @return mixed
      */
-    public function getName();
+    public function getResourceName();
 
 
     /**

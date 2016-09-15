@@ -25,7 +25,7 @@ class Role implements RoleInterface {
     /**
      * @return string
      */
-    public function getName()
+    public function getRoleName()
     {
         return $this->name;
     }

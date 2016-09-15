@@ -58,7 +58,7 @@ class Acl
      */
     public function addRole(RoleInterface $role)
     {
-        $this->roles->set($role->getName(), $role);
+        $this->roles->set($role->getRoleName(), $role);
 
         return $this;
     }
@@ -76,7 +76,7 @@ class Acl
             }
         }
 
-        $this->resources->set($resource->getName(), $resource);
+        $this->resources->set($resource->getIdentifier(), $resource);
 
         return $this;
     }

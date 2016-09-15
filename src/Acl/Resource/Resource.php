@@ -35,7 +35,7 @@ class Resource implements ResourceInterface {
     /**
      * @return string
      */
-    public function getName()
+    public function getResourceName()
     {
         return $this->name;
     }
@@ -69,5 +69,21 @@ class Resource implements ResourceInterface {
         return $this->permissions->has($name);
     }
 
+    /**
+     * @param ObjectIdentityInterface $objectIdentity
+     * @return boolean
+     */
+    public function equals(ObjectIdentityInterface $objectIdentity)
+    {
+        return $this->getIdentifier() === $objectIdentity->getIdentifier();
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return static::class . "@{$this->getResourceName()}";
+    }
 
 }

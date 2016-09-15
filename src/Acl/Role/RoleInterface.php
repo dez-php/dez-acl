@@ -11,6 +11,6 @@ interface RoleInterface {
     /**
      * @return string
      */
-    public function getName();
+    public function getRoleName();
 
 }
