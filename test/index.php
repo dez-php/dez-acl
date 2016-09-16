@@ -2,9 +2,7 @@
 
 namespace TestAcl;
 
-
 use Dez\ACL\ObjectBitmask\Access\Mask;
-use Dez\ACL\ObjectBitmask\Domain\ObjectIdentity;
 use Dez\ACL\RoleResourceAccess\ACL;
 use Dez\ACL\RoleResourceAccess\Resource\Resource;
 use Dez\ACL\RoleResourceAccess\Role\Role;
@@ -38,10 +36,8 @@ $acl->allow('Administrator', 'Index', 'login');
 
 $mask = new Mask();
 
-$mask->add(Mask::MASK_DELETE);
+$mask->add('edit')->add('view')->add('create')->add('super');
 
-$mask->add('edit')->add('view')->add('create');
+//var_dump(ObjectIdentity::createFromObject(123));
 
-var_dump(ObjectIdentity::createFromObject(123));
-
-die(var_dump($mask, $mask->has(Mask::MASK_DELETE), $acl));
+die(var_dump($mask->has(Mask::MASK_DELETE)));

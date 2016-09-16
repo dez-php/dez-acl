@@ -20,11 +20,7 @@ abstract class AbstractMask implements MaskInterface {
      */
     public function set($mask)
     {
-        if(! is_int($mask)) {
-            throw new \InvalidArgumentException("Mask is invalid. Should be an integer");
-        }
-
-        $this->mask = $mask;
+        $this->mask = $this->resolve($mask);
 
         return $this;
     }
@@ -54,7 +50,8 @@ abstract class AbstractMask implements MaskInterface {
      */
     public function remove($mask)
     {
-        $this->mask &= ~ $this->resolve($mask);
+        // a &= ~ b | a ^= b;
+        $this->mask ^= $this->resolve($mask);
 
         return $this;
     }
