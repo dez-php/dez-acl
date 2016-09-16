@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\Acl\Permission;
+namespace Dez\ACL\ObjectBitmask\Access;
 
 /**
  * Interface MaskInterface
- * @package Dez\Acl\Permission
+ * @package Dez\ACL\ObjectBitmask\Access
  */
 interface MaskInterface {
 

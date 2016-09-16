@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\Acl\Permission;
+namespace Dez\ACL\Common;
 
 /**
  * Interface Predicate
- * @package Dez\Acl\Permission
+ * @package Dez\Common\Common
  */
 interface Predicate {
 

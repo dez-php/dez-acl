@@ -1,24 +1,27 @@
 <?php
 
-namespace Dez\Acl;
+namespace Dez\ACL\RoleResourceAccess;
 
-use Dez\Acl\Collection\ObjectCollection;
-use Dez\Acl\Permission\Permission;
-use Dez\Acl\Permission\Predicate;
-use Dez\Acl\Resource\ResourceInterface;
-use Dez\Acl\Role\RoleInterface;
+use Dez\ACL\Common\Collection\ObjectCollection;
+use Dez\ACL\Common\Exception\BadArgumentException;
+use Dez\ACL\Common\Predicate;
+use Dez\ACL\RoleResourceAccess\Access\Access;
+use Dez\ACL\RoleResourceAccess\Resource\ResourceInterface;
+use Dez\ACL\RoleResourceAccess\Role\RoleInterface;
 use Dez\Config\Config;
 
 /**
- * Class Acl
- * @package Dez\Acl
+ * Class ACL
+ * @package Dez\ACL\RoleResourceAccess
  */
-class Acl
+class ACL
 {
     
     const ALLOW = 1;
 
     const DENY = 0;
+
+    const KEY_NAME_SEPARATOR = '::';
 
     /**
      * @var ObjectCollection|null
@@ -41,7 +44,7 @@ class Acl
     protected $config = null;
 
     /**
-     * Acl constructor.
+     * Common constructor.
      * @param array $config
      */
     public function __construct(array $config = [])
@@ -72,11 +75,11 @@ class Acl
     {
         if(count($permissions) > 0) {
             foreach ($permissions as $permission) {
-                $resource->addPermission(new Permission($permission));
+                $resource->addAccess(new Access($permission));
             }
         }
 
-        $this->resources->set($resource->getIdentifier(), $resource);
+        $this->resources->set($resource->getResourceName(), $resource);
 
         return $this;
     }
@@ -87,18 +90,18 @@ class Acl
      * @param $accesses
      * @param int $state
      * @return $this
-     * @throws AclException
+     * @throws BadArgumentException
      */
-    public function setAccess($roleName, $resourceName, $accesses, $state = Acl::DENY)
+    public function setAccess($roleName, $resourceName, $accesses, $state = ACL::DENY)
     {
         if(! $this->roles->has($roleName)) {
-            throw new AclException('Role with the name ":name" not found', [
+            throw new BadArgumentException('Role with the name ":name" not found', [
                 'name' => $roleName,
             ]);
         }
 
         if(! $this->resources->has($resourceName)) {
-            throw new AclException('Resource with the name ":name" not found', [
+            throw new BadArgumentException('Resource with the name ":name" not found', [
                 'name' => $resourceName,
             ]);
         }
@@ -106,14 +109,14 @@ class Acl
         $accesses = ! is_array($accesses) ? [$accesses] : $accesses;
 
         foreach($accesses as $access) {
-            if(! $this->resources->get($resourceName)->hasPermission($access)) {
-                throw new AclException('Permission ":name" do not attached to resource ":resource_name"', [
+            if(! $this->resources->get($resourceName)->hasAccess($access)) {
+                throw new BadArgumentException('Common ":name" do not attached to resource ":resource_name"', [
                     'name' => $access,
                     'resource_name' => $resourceName,
                 ]);
             }
 
-            $accessKey = "$roleName@$resourceName::$access";
+            $accessKey = implode(static::KEY_NAME_SEPARATOR, [$roleName, $resourceName, $access]);
             $this->accesses[$accessKey] = $state;
         }
 
@@ -124,39 +127,37 @@ class Acl
      * @param $roleName
      * @param $resourceName
      * @param $permissionName
-     * @return Acl
-     * @throws AclException
+     * @return ACL
      */
     public function allow($roleName, $resourceName, $permissionName)
     {
-        return $this->setAccess($roleName, $resourceName, $permissionName, Acl::ALLOW);
+        return $this->setAccess($roleName, $resourceName, $permissionName, ACL::ALLOW);
     }
 
     /**
      * @param $roleName
      * @param $resourceName
      * @param $permissionName
-     * @return Acl
-     * @throws AclException
+     * @return ACL
      */
     public function deny($roleName, $resourceName, $permissionName)
     {
-        return $this->setAccess($roleName, $resourceName, $permissionName, Acl::DENY);
+        return $this->setAccess($roleName, $resourceName, $permissionName, ACL::DENY);
     }
 
     /**
      * @param $role
      * @param $resource
-     * @param $permission
+     * @param $access
      * @param Predicate|null $predicate
      * @return bool
      */
-    public function isAllowed($role, $resource, $permission, Predicate $predicate = null)
+    public function isAllowed($role, $resource, $access, Predicate $predicate = null)
     {
         if($this->roles->has($role)) {
             if($this->resources->has($resource)) {
-                if($this->resources->get($resource)->hasPermission($permission)) {
-                    $accessKey = "$role@$resource::$permission";
+                if($this->resources->get($resource)->hasPermission($access)) {
+                    $accessKey = implode(static::KEY_NAME_SEPARATOR, [$role, $resource, $access]);
                     if($this->accesses->has($accessKey)) {
                         return $this->accesses->get($accessKey);
                     }

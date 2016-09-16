@@ -1,16 +1,16 @@
 <?php
 
-namespace Dez\Acl;
+namespace Dez\ACL\Common\Exception;
 
 /**
- * Class AclException
- * @package Dez\Acl
+ * Class ACLException
+ * @package Dez\Common
  */
-class AclException extends \Exception
+class ACLException extends \Exception
 {
 
     /**
-     * AclException constructor.
+     * ACLException constructor.
      * @param string $message
      * @param array $replacements
      * @param int $code

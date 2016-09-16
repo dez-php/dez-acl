@@ -1,6 +1,6 @@
 <?php
 
-namespace Dez\Acl\Collection;
+namespace Dez\ACL\Common\Collection;
 
 use ArrayAccess;
 use Countable;
@@ -10,7 +10,7 @@ use Serializable;
 
 /**
  * Class AbstractCollection
- * @package Dez\Acl\Collection
+ * @package Dez\ACL\Common\Collection
  */
 abstract class AbstractCollection implements ArrayAccess, IteratorAggregate, Countable, JsonSerializable, Serializable, CollectionInterface
 {

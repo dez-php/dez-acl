@@ -1,14 +1,10 @@
 <?php
 
-namespace Dez\Acl\Resource;
+namespace Dez\ACL\RoleResourceAccess\Resource;
 
-use Dez\Acl\Collection\ObjectCollection;
-use Dez\Acl\Permission\PermissionInterface;
+use Dez\ACL\Common\Collection\ObjectCollection;
+use Dez\ACL\RoleResourceAccess\Access\AccessInterface;
 
-/**
- * Class Resource
- * @package Dez\Acl\Resource
- */
 class Resource implements ResourceInterface {
 
     /**
@@ -41,12 +37,12 @@ class Resource implements ResourceInterface {
     }
 
     /**
-     * @param PermissionInterface $permission
+     * @param AccessInterface $access
      * @return $this
      */
-    public function addPermission(PermissionInterface $permission)
+    public function addAccess(AccessInterface $access)
     {
-        $this->permissions->set($permission->getName(), $permission);
+        $this->permissions->set($access->getAccessName(), $access);
 
         return $this;
     }
@@ -55,7 +51,7 @@ class Resource implements ResourceInterface {
      * @param string $name
      * @return mixed|null
      */
-    public function getPermission($name)
+    public function getAccess($name)
     {
         return $this->permissions->get($name);
     }
@@ -64,26 +60,9 @@ class Resource implements ResourceInterface {
      * @param $name
      * @return bool
      */
-    public function hasPermission($name)
+    public function hasAccess($name)
     {
         return $this->permissions->has($name);
-    }
-
-    /**
-     * @param ObjectIdentityInterface $objectIdentity
-     * @return boolean
-     */
-    public function equals(ObjectIdentityInterface $objectIdentity)
-    {
-        return $this->getIdentifier() === $objectIdentity->getIdentifier();
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return static::class . "@{$this->getResourceName()}";
     }
 
 }

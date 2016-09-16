@@ -1,6 +1,6 @@
 <?php
 
-namespace Dez\Acl\Collection;
+namespace Dez\ACL\Common\Collection;
 
 class ObjectCollection extends AbstractCollection {
 

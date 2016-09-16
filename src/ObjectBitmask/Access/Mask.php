@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\Acl\Permission;
+namespace Dez\ACL\ObjectBitmask\Access;
 
 /**
  * Class Mask
- * @package Dez\Acl\Permission
+ * @package Dez\ACL\ObjectBitmask\Access
  */
 class Mask extends AbstractMask {
 

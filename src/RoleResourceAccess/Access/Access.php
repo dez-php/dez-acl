@@ -1,12 +1,12 @@
 <?php
 
-namespace Dez\Acl\Permission;
+namespace Dez\ACL\RoleResourceAccess\Access;
 
 /**
- * Class Permission
- * @package Dez\Acl\Permission
+ * Class Access
+ * @package Dez\ACL\RoleResourceAccess\Access
  */
-class Permission implements PermissionInterface {
+class Access implements AccessInterface {
 
     /**
      * @var string
@@ -14,7 +14,7 @@ class Permission implements PermissionInterface {
     protected $name;
 
     /**
-     * Permission constructor.
+     * Common constructor.
      * @param $name
      */
     public function __construct($name)
@@ -25,7 +25,7 @@ class Permission implements PermissionInterface {
     /**
      * @return string
      */
-    public function getName()
+    public function getAccessName()
     {
         return $this->name;
     }

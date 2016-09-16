@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\Acl\Role;
+namespace Dez\ACL\RoleResourceAccess\Role;
 
 /**
  * Interface RoleInterface
- * @package Dez\Acl\Role
+ * @package Dez\ACL\RoleResourceAccess\Role
  */
 interface RoleInterface {
 

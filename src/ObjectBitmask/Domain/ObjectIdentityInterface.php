@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\Acl\Resource;
+namespace Dez\ACL\ObjectBitmask\Domain;
 
 /**
  * Interface ObjectIdentityInterface
- * @package Dez\Acl\Resource
+ * @package Dez\ACL\ObjectBitmask\Domain
  */
 interface ObjectIdentityInterface {
 

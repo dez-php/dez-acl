@@ -16,7 +16,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Dez\\Acl\\": "src/Acl"
+      "Dez\\ACL\\Common\\": "src/Common",
+      "Dez\\ACL\\ObjectBitmask\\": "src/ObjectBitmask",
+      "Dez\\ACL\\RoleResourceAccess\\": "src/RoleResourceAccess"
     }
   }
 }
