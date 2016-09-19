@@ -49,19 +49,19 @@ final class ObjectIdentity implements ObjectIdentityInterface
      */
     public static function createFromObject($object)
     {
-        if(! is_object($object)) {
+        if (!is_object($object)) {
             throw new BadArgumentException('Method ":method" takes only the object ":type" given', [
                 'method' => __METHOD__,
                 'type' => gettype($object)
             ]);
         }
 
-        if($object instanceof ObjectIdentityInterface) {
+        if ($object instanceof ObjectIdentityInterface) {
             return new static($object->getIdentifier());
         }
 
         $identifier = get_class($object);
-        if(method_exists($object, 'getId')) {
+        if (method_exists($object, 'getId')) {
             $identifier = "{$identifier}::{$object->getId()}";
         }
 

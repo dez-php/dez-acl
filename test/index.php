@@ -3,9 +3,11 @@
 namespace TestAcl;
 
 use Dez\ACL\ObjectBitmask\Access\Mask;
+use Dez\ACL\ObjectBitmask\Domain\ObjectIdentity;
 use Dez\ACL\RoleResourceAccess\ACL;
 use Dez\ACL\RoleResourceAccess\Resource\Resource;
 use Dez\ACL\RoleResourceAccess\Role\Role;
+use Dez\Config\Config;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -39,5 +41,18 @@ $mask = new Mask();
 $mask->add('edit')->add('view')->add('create')->add('super');
 
 //var_dump(ObjectIdentity::createFromObject(123));
+
+$objectACL = new \Dez\ACL\ObjectBitmask\ACL();
+
+$objectACL->registerObject(new \stdClass())->grant(ObjectIdentity::createFromObject(new \stdClass()), Mask::MASK_DELETE);
+
+$data = serialize($objectACL);
+
+die(var_dump($data));
+
+die(var_dump(
+    Config::factory('c:\\usr\\php\\php.ini')->toIni()
+));
+
 
 die(var_dump($mask->has(Mask::MASK_DELETE)));

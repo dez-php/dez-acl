@@ -283,7 +283,7 @@ abstract class AbstractCollection implements ArrayAccess, IteratorAggregate, Cou
      */
     public function serialize()
     {
-        return $this->data;
+        return serialize($this->data);
     }
 
     /**

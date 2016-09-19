@@ -159,7 +159,8 @@ class ACL
                 if($this->resources->get($resource)->hasPermission($access)) {
                     $accessKey = implode(static::KEY_NAME_SEPARATOR, [$role, $resource, $access]);
                     if($this->accesses->has($accessKey)) {
-                        return $this->accesses->get($accessKey);
+                        $predicateResult = (null === $predicate || $predicate->apply($this->roles->get($role), $this->resources->get($resource)));
+                        return $this->accesses->get($accessKey) && $predicateResult;
                     }
                 }
             }

@@ -2,8 +2,7 @@
 
 namespace Dez\ACL\Common\Collection;
 
-class ObjectCollection extends AbstractCollection {
-
-
+class ObjectCollection extends AbstractCollection
+{
 
 }
