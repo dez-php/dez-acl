@@ -4,6 +4,7 @@ namespace TestAcl;
 
 use Dez\ACL\ObjectBitmask\Access\Mask;
 use Dez\ACL\ObjectBitmask\Domain\ObjectIdentity;
+use Dez\ACL\ObjectBitmask\ProviderAbstract;
 use Dez\ACL\RoleResourceAccess\ACL;
 use Dez\ACL\RoleResourceAccess\Resource\Resource;
 use Dez\ACL\RoleResourceAccess\Role\Role;
@@ -42,13 +43,18 @@ $mask->add('edit')->add('view')->add('create')->add('super');
 
 //var_dump(ObjectIdentity::createFromObject(123));
 
-$objectACL = new \Dez\ACL\ObjectBitmask\ACL();
+$objectACL = new \Dez\ACL\ObjectBitmask\ProviderAbstract();
 
-$objectACL->registerObject(new \stdClass())->grant(ObjectIdentity::createFromObject(new \stdClass()), Mask::MASK_DELETE);
+$identity = ObjectIdentity::createFromObject(new \stdClass());
+
+$objectACL->registerObject(new \stdClass())
+    ->grant($identity, Mask::MASK_DELETE);
 
 $data = serialize($objectACL);
+/** @var $unserialized ProviderAbstract */
+$unserialized = unserialize($data);
 
-die(var_dump($data));
+die(var_dump($data, $unserialized, $unserialized->getIdentity($identity)->allowed($identity, Mask::MASK_DELETE)));
 
 die(var_dump(
     Config::factory('c:\\usr\\php\\php.ini')->toIni()

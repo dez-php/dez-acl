@@ -5,14 +5,13 @@ namespace Dez\ACL\ObjectBitmask;
 use Dez\ACL\Common\Collection\ObjectCollection;
 use Dez\ACL\ObjectBitmask\Access\ObjectAccess;
 use Dez\ACL\ObjectBitmask\Domain\ObjectIdentity;
-use Dez\Config\Config;
 use Serializable;
 
 /**
- * Class ACL
+ * Class ProviderAbstract
  * @package Dez\ACL\ObjectBitmask
  */
-class ACL implements Serializable
+class ProviderAbstract implements Serializable
 {
 
     /**
@@ -28,9 +27,25 @@ class ACL implements Serializable
         $this->identities = new ObjectCollection();
     }
 
+    /**
+     * @param ObjectIdentity $objectIdentity
+     * @return ObjectAccess|null
+     */
+    public function getIdentity(ObjectIdentity $objectIdentity)
+    {
+        return $this->identities->get($objectIdentity->getIdentifier());
+    }
+
+    public function grantObject(ObjectIdentity $objectIdentity, ObjectIdentity $secureObject, $mask = 0)
+    {
+        $this->registerObject($objectIdentity)->grant($secureObject, $mask);
+
+        return $this;
+    }
+
     public function registerObject($object)
     {
-        if(!($object instanceof ObjectIdentity)) {
+        if (!($object instanceof ObjectIdentity)) {
             $object = ObjectIdentity::createFromObject($object);
         }
 
@@ -48,7 +63,8 @@ class ACL implements Serializable
     public function unserialize($serialized)
     {
         /** @var ObjectCollection|ObjectAccess[] */
-        $identities = $this->unserialize($serialized);
+        $identities = unserialize($serialized);
+        $this->identities = new ObjectCollection();
 
         foreach ($identities as $identity => $access) {
             $this->identities->set($identity, $access);

@@ -2,11 +2,13 @@
 
 namespace Dez\ACL\ObjectBitmask\Access;
 
+use Serializable;
+
 /**
  * Class AbstractMask
  * @package Dez\ACL\ObjectBitmask\Access
  */
-abstract class AbstractMask implements MaskInterface {
+abstract class AbstractMask implements MaskInterface, Serializable {
 
     /**
      * @var int
@@ -95,6 +97,22 @@ abstract class AbstractMask implements MaskInterface {
     public function has($mask)
     {
         return (boolean) ($this->mask & $this->resolve($mask));
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize($this->mask);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $this->set(unserialize($serialized));
     }
 
 
