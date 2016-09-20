@@ -4,8 +4,9 @@ namespace Dez\ACL\RoleResourceAccess\Resource;
 
 use Dez\ACL\Common\Collection\ObjectCollection;
 use Dez\ACL\RoleResourceAccess\Access\AccessInterface;
+use Serializable;
 
-class Resource implements ResourceInterface {
+class Resource implements ResourceInterface, Serializable {
 
     /**
      * @var string
@@ -15,7 +16,7 @@ class Resource implements ResourceInterface {
     /**
      * @var ObjectCollection
      */
-    protected $permissions = null;
+    protected $accesses = null;
 
     /**
      * Resource constructor.
@@ -24,7 +25,7 @@ class Resource implements ResourceInterface {
      */
     public function __construct($name, array $permissions = [])
     {
-        $this->permissions = new ObjectCollection();
+        $this->accesses = new ObjectCollection();
         $this->name = $name;
     }
 
@@ -42,7 +43,7 @@ class Resource implements ResourceInterface {
      */
     public function addAccess(AccessInterface $access)
     {
-        $this->permissions->set($access->getAccessName(), $access);
+        $this->accesses->set($access->getAccessName(), $access);
 
         return $this;
     }
@@ -53,7 +54,7 @@ class Resource implements ResourceInterface {
      */
     public function getAccess($name)
     {
-        return $this->permissions->get($name);
+        return $this->accesses->get($name);
     }
 
     /**
@@ -62,7 +63,31 @@ class Resource implements ResourceInterface {
      */
     public function hasAccess($name)
     {
-        return $this->permissions->has($name);
+        return $this->accesses->has($name);
     }
 
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize([$this->getResourceName(), $this->accesses]);
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list($this->name, $this->accesses) = unserialize($serialized);
+    }
 }

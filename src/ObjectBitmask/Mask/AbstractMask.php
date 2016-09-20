@@ -1,14 +1,22 @@
 <?php
 
-namespace Dez\ACL\ObjectBitmask\Access;
-
-use Serializable;
+namespace Dez\ACL\ObjectBitmask\Mask;
+use JsonSerializable;
 
 /**
  * Class AbstractMask
- * @package Dez\ACL\ObjectBitmask\Access
+ * @package Dez\ACL\ObjectBitmask\Mask
  */
-abstract class AbstractMask implements MaskInterface, Serializable {
+abstract class AbstractMask implements MaskInterface, JsonSerializable {
+
+    /**
+     * AbstractMask constructor.
+     * @param int $mask
+     */
+    public function __construct($mask = 0)
+    {
+        $this->set($mask);
+    }
 
     /**
      * @var int
@@ -100,20 +108,26 @@ abstract class AbstractMask implements MaskInterface, Serializable {
     }
 
     /**
-     * @return string
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
      */
-    public function serialize()
+    function jsonSerialize()
     {
-        return serialize($this->mask);
+        return $this->get();
     }
 
     /**
-     * @param string $serialized
+     * The __toString method allows a class to decide how it will react when it is converted to a string.
+     *
+     * @return string
+     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring
      */
-    public function unserialize($serialized)
+    function __toString()
     {
-        $this->set(unserialize($serialized));
+        return $this->get();
     }
-
 
 }

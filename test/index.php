@@ -2,13 +2,12 @@
 
 namespace TestAcl;
 
-use Dez\ACL\ObjectBitmask\Access\Mask;
 use Dez\ACL\ObjectBitmask\Domain\ObjectIdentity;
-use Dez\ACL\ObjectBitmask\ProviderAbstract;
+use Dez\ACL\ObjectBitmask\Mask\Mask;
+use Dez\ACL\ObjectBitmask\Repository;
 use Dez\ACL\RoleResourceAccess\ACL;
 use Dez\ACL\RoleResourceAccess\Resource\Resource;
 use Dez\ACL\RoleResourceAccess\Role\Role;
-use Dez\Config\Config;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
@@ -34,31 +33,66 @@ $acl->allow('RegisteredUser', 'Index', 'login');
 $acl->allow('RegisteredUser', 'Users', 'edit');
 $acl->allow('RegisteredUser', 'Users', 'item');
 $acl->allow('Administrator', 'Index', 'login');
+
+$serialized = serialize($acl);
+
+var_dump(
+    $serialized,
+    unserialize($serialized)
+);
+
 //$acl->deny('Guest', 'Users', 'edit');
 //$acl->deny('User2', 'Index', 'logout');
 
 $mask = new Mask();
 
-$mask->add('edit')->add('view')->add('create')->add('super');
+$mask->add('edit')->add('view')->add('create')->add('super')->add(Mask::MASK_VIEW | Mask::MASK_MASTER);
+
+class User {
+    protected $id;
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+}
 
 //var_dump(ObjectIdentity::createFromObject(123));
 
-$objectACL = new \Dez\ACL\ObjectBitmask\ProviderAbstract();
-
 $identity = ObjectIdentity::createFromObject(new \stdClass());
+$user = ObjectIdentity::createFromObject(new User(777));
 
-$objectACL->registerObject(new \stdClass())
-    ->grant($identity, Mask::MASK_DELETE);
+$secureIdentity = ObjectIdentity::createFromObject(new \SplObjectStorage());
 
-$data = serialize($objectACL);
-/** @var $unserialized ProviderAbstract */
-$unserialized = unserialize($data);
+$objectACL = new Repository();
 
-die(var_dump($data, $unserialized, $unserialized->getIdentity($identity)->allowed($identity, Mask::MASK_DELETE)));
+$objectACL->grant($identity, new User(mt_rand(10, 10000)), $mask);
+$objectACL->grant($identity, new User(mt_rand(10, 10000)), Mask::MASK_SUPER);
+$objectACL->grant($identity, $secureIdentity, Mask::MASK_SUPER | Mask::MASK_DELETE);
+$objectACL->grant($identity, new User(mt_rand(10, 10000)), Mask::MASK_OWNER | Mask::MASK_MASTER);
+$objectACL->grant($identity, new User(mt_rand(10, 10000)), Mask::MASK_UPDATE);
 
-die(var_dump(
-    Config::factory('c:\\usr\\php\\php.ini')->toIni()
-));
+$objectACL->grant($user, new User(mt_rand(10, 10000)), Mask::MASK_SUPER);
+$objectACL->grant($user, new User(mt_rand(10, 10000)), Mask::MASK_SUPER | Mask::MASK_DELETE);
+$objectACL->grant($user, new User(mt_rand(10, 10000)), Mask::MASK_OWNER | Mask::MASK_MASTER);
+$objectACL->grant($user, new User(mt_rand(10, 10000)), Mask::MASK_UPDATE);
 
 
-die(var_dump($mask->has(Mask::MASK_DELETE)));
+//$data = serialize($objectACL);
+///** @var $unserialized AbstractProvider */
+//$unserialized = unserialize($data);
+
+file_put_contents(__DIR__ . '/accesses.json', json_encode($objectACL, JSON_PRETTY_PRINT));
+
+//die(var_dump($objectACL));
+
+//die(var_dump(
+//    Config::factory('c:\\usr\\php\\php.ini')->toIni()
+//));
+
+
+//die(var_dump($mask->has(Mask::MASK_DELETE)));

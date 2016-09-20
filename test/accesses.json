@@ -1,0 +1,15 @@
+{
+    "stdClass": {
+        "TestAcl\\User#8865": 2147483687,
+        "TestAcl\\User#9800": 2147483648,
+        "SplObjectStorage": 2147483664,
+        "TestAcl\\User#8626": 96,
+        "TestAcl\\User#6603": 8
+    },
+    "TestAcl\\User#777": {
+        "TestAcl\\User#2343": 2147483648,
+        "TestAcl\\User#7925": 2147483664,
+        "TestAcl\\User#1837": 96,
+        "TestAcl\\User#5034": 8
+    }
+}

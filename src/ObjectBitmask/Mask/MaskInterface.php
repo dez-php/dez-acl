@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\ACL\ObjectBitmask\Access;
+namespace Dez\ACL\ObjectBitmask\Mask;
 
 /**
  * Interface MaskInterface
- * @package Dez\ACL\ObjectBitmask\Access
+ * @package Dez\ACL\ObjectBitmask\Mask
  */
 interface MaskInterface {
 

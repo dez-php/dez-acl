@@ -199,9 +199,7 @@ abstract class AbstractCollection implements ArrayAccess, IteratorAggregate, Cou
         $arrayData = [];
 
         foreach ($this as $key => $data) {
-            $arrayData[$key] = ($data instanceof CollectionInterface)
-                ? $data->toArray()
-                : $data;
+            $arrayData[$key] = ($data instanceof CollectionInterface) ? $data->toArray() : $data;
         }
 
         return $arrayData;

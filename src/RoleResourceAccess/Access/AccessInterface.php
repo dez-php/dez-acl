@@ -4,7 +4,7 @@ namespace Dez\ACL\RoleResourceAccess\Access;
 
 /**
  * Interface PermissionInterface
- * @package Dez\ACL\RoleResourceAccess\Access
+ * @package Dez\ACL\RoleResourceAccess\Mask
  */
 interface AccessInterface {
 

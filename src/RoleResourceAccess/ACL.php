@@ -5,6 +5,7 @@ namespace Dez\ACL\RoleResourceAccess;
 use Dez\ACL\Common\Collection\ObjectCollection;
 use Dez\ACL\Common\Exception\BadArgumentException;
 use Dez\ACL\Common\Predicate;
+use Dez\ACL\ObjectBitmask\Domain\ObjectIdentity;
 use Dez\ACL\RoleResourceAccess\Access\Access;
 use Dez\ACL\RoleResourceAccess\Resource\ResourceInterface;
 use Dez\ACL\RoleResourceAccess\Role\RoleInterface;
@@ -14,7 +15,7 @@ use Dez\Config\Config;
  * Class ACL
  * @package Dez\ACL\RoleResourceAccess
  */
-class ACL
+class ACL implements \Serializable
 {
     
     const ALLOW = 1;
@@ -167,6 +168,31 @@ class ACL
         }
 
         return false;
+    }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize([$this->accesses, $this->resources, $this->roles,]);
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list($this->accesses, $this->resources, $this->roles) = unserialize($serialized);
     }
 
 }

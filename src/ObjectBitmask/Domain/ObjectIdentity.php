@@ -62,7 +62,7 @@ final class ObjectIdentity implements ObjectIdentityInterface
 
         $identifier = get_class($object);
         if (method_exists($object, 'getId')) {
-            $identifier = "{$identifier}::{$object->getId()}";
+            $identifier = "{$identifier}#{$object->getId()}";
         }
 
         return new static($identifier);
