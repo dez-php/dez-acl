@@ -1,6 +1,6 @@
 {
   "name": "dez-php/dez-acl",
-  "description": "Access Control List",
+  "description": "Extended Access Control List",
   "keywords": ["php acl","acl","dez-php acl"],
   "authors": [
     {
@@ -15,7 +15,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Dez\\Acl\\": "src/Acl"
+      "Dez\\ACL\\Common\\": "src/Common",
+      "Dez\\ACL\\ObjectBitmask\\": "src/ObjectBitmask",
+      "Dez\\ACL\\RoleResourceAccess\\": "src/RoleResourceAccess"
     }
   }
 }

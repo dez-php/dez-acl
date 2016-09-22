@@ -1,2 +1,2 @@
 # dez-acl
-DezPHP - ACL Component
+Extended Access Control List
