@@ -40,17 +40,10 @@ class ACL implements \Serializable
     protected $accesses = null;
 
     /**
-     * @var Config
-     */
-    protected $config = null;
-
-    /**
      * Common constructor.
-     * @param array $config
      */
-    public function __construct(array $config = [])
+    public function __construct()
     {
-        $this->config = Config::factory($config);
         $this->roles = new ObjectCollection();
         $this->resources = new ObjectCollection();
         $this->accesses = new ObjectCollection();
