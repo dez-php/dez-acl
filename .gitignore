@@ -1,0 +1,7 @@
+*~
+vendor
+.idea
+*.log
+.DS_Store
+app/config/dev.config.php
+node_modules

@@ -1,0 +1,21 @@
+{
+  "name": "dez-php/dez-acl",
+  "description": "Access Control List",
+  "keywords": ["php acl","acl","dez-php acl"],
+  "authors": [
+    {
+      "name": "Ivan Gontarenko",
+      "email": "stewie.dev@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": ">=5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dez\\Acl\\": "src/Acl"
+    }
+  }
+}
